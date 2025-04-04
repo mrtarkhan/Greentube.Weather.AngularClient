@@ -1,0 +1,57 @@
+<div class="container py-4">
+  <div class="weather-card">
+    <h5 class="text-muted mb-3">{{city}}</h5>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-column mb-2">
+        <div class="me-3 d-flex flex-row">
+          <div class="">
+            <img class="temp-icon" [src]="currentWeather?.icon" alt="Weather Icon">
+          </div>
+          <div class="temp-display">
+            {{ currentWeather?.temprature }}
+          </div>
+          <div class="d-flex flex-column p-1">
+            <span class="temp-sign"> °</span>
+            <span class="temp-sign">{{ getTempratureSign() }}</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="flex-item mr-2">
+        <div class="temp-display">
+          {{ currentWeather?.localDateTime | date:'HH:mm:ss':'UTC' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="weather-detail">
+      <div class="row">
+        <div class="col-6">
+          <div class="detail-label">Feels like</div>
+          <div class="detail-value">
+            <i class="bi bi-arrow-up-right"></i>
+            {{currentWeather?.feelsLike}} °{{ getTempratureSign() }}
+          </div>
+        </div>
+        <div class="col-6" *ngIf="suntime == sunTimeEnum.Sunrise">
+          <div class="detail-label">☀ Sunrise</div>
+          <div class="detail-value"> {{ currentWeather?.sunriseTime |
+            date:'HH:mm:ss':'UTC'}}</div>
+        </div>
+        <div class="col-6" *ngIf="suntime == sunTimeEnum.Sunset">
+          <div class="detail-label">🌅 Sunset</div>
+          <div class="detail-value"> {{ currentWeather?.sunsetTime |
+            date:'HH:mm:ss':'UTC' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="weather-detail d-flex justify-content-between align-items-center">
+      <div>
+        <div class="mt-1">
+          <span class="air-quality">{{ currentWeather?.description }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

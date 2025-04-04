@@ -1,0 +1,13 @@
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="cityDropdown" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        {{ currentCity }}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="cityDropdown">
+        <li *ngFor="let city of cities">
+            <a class="dropdown-item" href="#" (click)="setCity(city); $event.preventDefault()">
+                {{ city }}
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,13 @@
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="sunDropdown" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        {{ sunTimes[currentSunTime] }}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="sunDropdown">
+        <li *ngFor="let sun of sunTimeKeys">
+            <a class="dropdown-item" href="#" (click)="setSunTime(sun); $event.preventDefault()">
+                {{ sunTimes[sun] }}
+            </a>
+        </li>
+    </ul>
+</div>
