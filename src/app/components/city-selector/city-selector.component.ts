@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { citySelected } from 'src/app/states/actions/city-selector.actions';
 
 @Component({
   selector: 'app-city-selector',
@@ -6,24 +9,24 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
   styleUrls: ['./city-selector.component.css']
 })
 export class CitySelectorComponent {
-  @Output() cityChanged = new EventEmitter<string>();
-  currentCity: string = 'Vienna';
+  current$: Observable<string> = of<string>('Vienna');
   cities: string[] = ["London", "Vienna", "Ljubljana", "Belgrade", "Valletta"];
 
-  constructor() { }
+  constructor(private store: Store<{ city: 'Vienna' }>) {
+    this.current$ = this.store.select('city');
+  }
 
   ngOnInit() {
-    const storedCity = localStorage.getItem('city');
-    if (storedCity && storedCity != this.currentCity) {
-      this.currentCity = storedCity;
+    let storedCity = localStorage.getItem('city');
+    if (storedCity == undefined) {
+      storedCity = 'Vienna';
     }
-    this.cityChanged.emit(this.currentCity);
+
+    this.store.dispatch(citySelected({ name: storedCity }));
   }
 
   setCity(city: string) {
-    this.currentCity = city;
-    localStorage.setItem('city', city);
-    this.cityChanged.emit(this.currentCity);
+    this.store.dispatch(citySelected({ name: city }));
   }
 
 

@@ -12,7 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from '../app/interceptors/http.error-handler.interceptor';
-
+import { StoreModule } from '@ngrx/store';
+import { cityReducer } from './states/reducers/city-selector.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CityEffects } from './states/effects/city-selector.effects';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import { ErrorInterceptor } from '../app/interceptors/http.error-handler.interce
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    })
+    }),
+    StoreModule.forRoot({city: cityReducer}),
+    EffectsModule.forRoot([CityEffects])
   ],
   providers: [WeatherService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
